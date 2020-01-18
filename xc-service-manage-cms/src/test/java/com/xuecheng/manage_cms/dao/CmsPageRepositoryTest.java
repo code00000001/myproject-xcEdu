@@ -5,12 +5,9 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.*;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.util.List;
 import java.util.Optional;
 
 @SpringBootTest
@@ -21,7 +18,19 @@ public class CmsPageRepositoryTest {
 
     @Test
     public void testFindAll(){
-        List<CmsPage> all = cmsPageRepository.findAll();
+        //模糊匹配
+        ExampleMatcher matcher = ExampleMatcher.matching();
+        matcher = matcher.withMatcher("pageAliase",ExampleMatcher.GenericPropertyMatchers.contains());
+        //精确条件值
+        CmsPage cmsPage = new CmsPage();
+        //站点id
+        cmsPage.setSiteId("5a751fab6abb5044e0d19ea1");
+        //模板id
+        cmsPage.setTemplateId("5a962b52b00ffc514038faf7");
+        //创建条件实例
+        Example example = Example.of(cmsPage, matcher);
+        Pageable pageable = new PageRequest(0, 10);
+        Page<CmsPage> all = cmsPageRepository.findAll(example,pageable);
         System.out.println(all);
     }
 

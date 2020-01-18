@@ -12,7 +12,7 @@ public class QueryPageRequest extends RequestData {
     //页面名称
     private String pageName;
     //别名
-    private String pageAlias;
+    private String pageAliase;
     //模板id
     private String templateId;
 }
