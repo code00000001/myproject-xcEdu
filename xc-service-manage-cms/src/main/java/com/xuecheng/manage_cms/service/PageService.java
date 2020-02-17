@@ -6,11 +6,14 @@ import com.xuecheng.framework.domain.cms.response.CmsPageResult;
 import com.xuecheng.framework.model.response.CommonCode;
 import com.xuecheng.framework.model.response.QueryResponseResult;
 import com.xuecheng.framework.model.response.QueryResult;
+import com.xuecheng.framework.model.response.ResponseResult;
 import com.xuecheng.manage_cms.dao.CmsPageRepository;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 public class PageService {
@@ -63,5 +66,42 @@ public class PageService {
             return new CmsPageResult(CommonCode.SUCCESS, cmsPage);
         }
         return new CmsPageResult(CommonCode.FAIL, null);
+    }
+
+    //根据id查询页面
+    public CmsPage findById(String id){
+        Optional<CmsPage> cmsPage = cmsPageRepository.findById(id);
+        if (cmsPage.isPresent()){
+            return cmsPage.get();
+        }
+        return null;
+    }
+
+    //修改页面
+    public CmsPageResult updateById(String id,CmsPage cmsPage){
+        CmsPage result = this.findById(id);
+        if (result != null){
+            result.setTemplateId(cmsPage.getTemplateId());
+            result.setSiteId(cmsPage.getSiteId());
+            result.setPageAliase(cmsPage.getPageAliase());
+            result.setPageName(cmsPage.getPageName());
+            result.setPageWebPath(cmsPage.getPageWebPath());
+            result.setPagePhysicalPath(cmsPage.getPagePhysicalPath());
+            CmsPage save = cmsPageRepository.save(result);
+            if (save != null){
+                return new CmsPageResult(CommonCode.SUCCESS, save);
+            }
+        }
+        return new CmsPageResult(CommonCode.FAIL, null);
+    }
+
+    //删除页面
+    public ResponseResult delete(String id){
+        Optional<CmsPage> optionalCmsPage = cmsPageRepository.findById(id);
+        if (optionalCmsPage.isPresent()){
+            cmsPageRepository.deleteById(id);
+            return new ResponseResult(CommonCode.SUCCESS);
+        }
+        return new ResponseResult(CommonCode.FAIL);
     }
 }
