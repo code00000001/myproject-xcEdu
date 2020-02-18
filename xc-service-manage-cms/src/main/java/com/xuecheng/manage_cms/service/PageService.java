@@ -2,7 +2,9 @@ package com.xuecheng.manage_cms.service;
 
 import com.xuecheng.framework.domain.cms.CmsPage;
 import com.xuecheng.framework.domain.cms.request.QueryPageRequest;
+import com.xuecheng.framework.domain.cms.response.CmsCode;
 import com.xuecheng.framework.domain.cms.response.CmsPageResult;
+import com.xuecheng.framework.exception.ExceptionCast;
 import com.xuecheng.framework.model.response.CommonCode;
 import com.xuecheng.framework.model.response.QueryResponseResult;
 import com.xuecheng.framework.model.response.QueryResult;
@@ -56,16 +58,19 @@ public class PageService {
     }
 
     public CmsPageResult add(CmsPage cmsPage){
+        if (cmsPage == null){
+            //处理异常,抛出异常
+            ExceptionCast.cast(CommonCode.FAIL);
+        }
         //校验页面的唯一性
         CmsPage cmsPage1 = cmsPageRepository.findByPageNameAndSiteIdAndPageWebPath(cmsPage.getPageName(), cmsPage.getSiteId(), cmsPage.getPageWebPath());
-        if (null == cmsPage1){
-            //就新增页面
-            //siteId不能从页面传，要用MongoDB自己生成的
-            cmsPage.setSiteId(null);
-            cmsPageRepository.save(cmsPage);
-            return new CmsPageResult(CommonCode.SUCCESS, cmsPage);
+        //如果页面存在，就抛出异常
+        if (cmsPage1 != null) {
+            ExceptionCast.cast(CmsCode.CMS_ADDPAGE_EXISTSNAME);
         }
-        return new CmsPageResult(CommonCode.FAIL, null);
+        cmsPage.setPageId(null);
+        cmsPageRepository.save(cmsPage);
+        return new CmsPageResult(CommonCode.SUCCESS, cmsPage);
     }
 
     //根据id查询页面
