@@ -6,15 +6,21 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.*;
+import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.web.client.RestTemplate;
 
+import java.util.Map;
 import java.util.Optional;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
 public class CmsPageRepositoryTest {
     @Autowired
-    CmsPageRepository cmsPageRepository;
+    private CmsPageRepository cmsPageRepository;
+
+    @Autowired
+    private RestTemplate restTemplate;
 
     @Test
     public void testFindAll(){
@@ -52,5 +58,12 @@ public class CmsPageRepositoryTest {
         Pageable pageable = PageRequest.of(0, 2);
         Page<CmsPage> bySiteIdAndPageType = cmsPageRepository.findBySiteIdAndPageType("5a751fab6abb5044e0d19ea1", "1", pageable);
         System.out.println(bySiteIdAndPageType.toString());
+    }
+
+    @Test
+    public void testRestTemplate(){
+        ResponseEntity<Map> responseEntity = restTemplate.getForEntity("http://localhost:31001/cms/config/getModel/5a791725dd573c3574ee333f", Map.class);
+        Map entityBody = responseEntity.getBody();
+        System.out.println(entityBody);
     }
 }
