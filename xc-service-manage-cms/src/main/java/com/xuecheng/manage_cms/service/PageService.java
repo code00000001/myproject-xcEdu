@@ -96,6 +96,8 @@ public class PageService {
             result.setPageName(cmsPage.getPageName());
             result.setPageWebPath(cmsPage.getPageWebPath());
             result.setPagePhysicalPath(cmsPage.getPagePhysicalPath());
+            //修改dataUrl
+            result.setDataUrl(cmsPage.getDataUrl());
             CmsPage save = cmsPageRepository.save(result);
             if (save != null){
                 return new CmsPageResult(CommonCode.SUCCESS, save);
