@@ -23,6 +23,7 @@ public class Consumer01 {
             connection = factory.newConnection();
             //创建与channel的连接
             channel = connection.createChannel();
+            System.out.println("customer ip: "+connection.getPort());
             /**
              * 声明队列，如果rabbit中没有则创建此队列
              * param1:队列名称
@@ -68,12 +69,12 @@ public class Consumer01 {
         } catch (TimeoutException e) {
             e.printStackTrace();
         } finally {
-            if (channel != null){
+           /* if (channel != null){
                 channel.close();
             }
             if (connection != null){
                 connection.close();
-            }
+            }*/
         }
 
     }

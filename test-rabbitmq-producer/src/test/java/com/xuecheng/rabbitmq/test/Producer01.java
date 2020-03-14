@@ -26,6 +26,7 @@ public class Producer01 {
             connection = factory.newConnection();
             //创建与Channel的连接
             channel = connection.createChannel();
+            System.out.println("product ip："+connection.getPort());
             /**
              * 声明队列，如果rabbit中没有则创建此队列
              * param1:队列名称
@@ -51,12 +52,12 @@ public class Producer01 {
             e.printStackTrace();
         }
         finally {
-            if (channel != null){
+            /*if (channel != null){
                 channel.close();
             }
             if (connection != null){
                 connection.close();
-            }
+            }*/
         }
     }
 }
