@@ -52,7 +52,7 @@ public class Producer01 {
             e.printStackTrace();
         }
         finally {
-            /*if (channel != null){
+           /* if (channel != null){
                 channel.close();
             }
             if (connection != null){

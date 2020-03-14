@@ -69,7 +69,7 @@ public class Consumer01 {
         } catch (TimeoutException e) {
             e.printStackTrace();
         } finally {
-           /* if (channel != null){
+            /*if (channel != null){
                 channel.close();
             }
             if (connection != null){
