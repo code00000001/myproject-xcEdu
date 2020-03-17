@@ -1,4 +1,4 @@
-package com.xuecheng.rabbitmq;
+package rabbitmq;
 
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -6,11 +6,11 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class Producer05TestTopicSpringBoot {
+public class Consumer05TestTopicSpringBoot {
     @Autowired
     private RabbitTemplate rabbitTemplate;
     public static void main(String[] args) {
-        SpringApplication.run(Producer05TestTopicSpringBoot.class, args);
+        SpringApplication.run(Consumer05TestTopicSpringBoot.class, args);
     }
 
 
