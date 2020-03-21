@@ -1,0 +1,8 @@
+{
+  "properties": [
+    {
+      "name": "xuecheng.mq.queue",
+      "type": "java.lang.String",
+      "description": "Description for xuecheng.mq.queue."
+    }
+  ] }
