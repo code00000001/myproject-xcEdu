@@ -34,7 +34,7 @@ public class CourseService {
      * @param courseId
      * @return
      */
-    public List<TeachplanNode> findTeachPlanList(String courseId){
+    public TeachplanNode findTeachPlanList(String courseId){
         return teachPlanMapper.selectList(courseId);
     }
 

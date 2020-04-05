@@ -8,8 +8,6 @@ import com.xuecheng.manage_course.service.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 /**
  * @author code 2020/4/5
  */
@@ -22,7 +20,7 @@ public class CourseController implements CourseControllerApi {
 
     @Override
     @GetMapping("/teachplan/list/{courseId}")
-    public List<TeachplanNode> findTeachPlanList(@PathVariable("courseId") String courseId) {
+    public TeachplanNode findTeachPlanList(@PathVariable("courseId") String courseId) {
         return courseService.findTeachPlanList(courseId);
     }
 
